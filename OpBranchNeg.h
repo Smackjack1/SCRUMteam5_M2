@@ -3,9 +3,9 @@ OpBranchNeg.h and OpBranchNeg.cpp written by Quinton
 */
 #ifndef __OPBRANCHNEG__
 #define __OPBRANCHNEG__
-#include "OpCode.h"
+#include "BranchOpCode.h"
 
-class OpBranchNeg : public OpCode
+class OpBranchNeg : public BranchOpCode
 {
 public:
 	OpBranchNeg();//memory goes in the squiggly and in the constructor
