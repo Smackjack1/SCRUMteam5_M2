@@ -3,14 +3,14 @@ OpRead.h and OpRead.cpp written by Tyler
 */
 #ifndef __OPREAD__
 #define __OPREAD__
-#include "OpCode.h"
+#include "GUIOpCode.h"
 //#include memory.h
-class OpRead : public OpCode
+class OpRead : public GUIOpCode
 {
 public:
 	//std::string code = "10";
 	OpRead();
-	void execute(int argument);
+	std::string execute(int argument, std::string input);
 };
 
 #endif
