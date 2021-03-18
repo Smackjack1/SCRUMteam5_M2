@@ -35,7 +35,7 @@ void Executor::CallInvoker()
 	string opcode = "";
 	int operand = 0;
 	//todo??? make executor in charge of opRead and opWrite
-	//while (GetOpcode() != "43")//43 = Halt 
+	//while (GetOpcode() != "43")//43 = Halt, this was removed now whoever calls it should use this while loop
 	//{
 	opcode = GetOpcode();
 	operand = GetOperand();
