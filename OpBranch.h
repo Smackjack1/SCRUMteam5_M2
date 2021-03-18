@@ -3,9 +3,9 @@ OpBranch.h and OpBranch.cpp written by Quinton
 */
 #ifndef __OPBRANCH__
 #define __OPBRANCH__
-#include "OpCode.h"
+#include "BranchOpCode.h"
 
-class OpBranch : public OpCode
+class OpBranch : public BranchOpCode
 {
 public:
 	OpBranch();//memory goes in the squiggly and in the constructor
