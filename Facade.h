@@ -13,7 +13,7 @@ public:
 	std::string getMemory();
 	void execute();
 	bool addCommand(std::string command);
-	void incrementPC(int increment = 1);
+	void incrementPC(int increment);
 	std::string getCurrentOpCode();
 	int getCurrentOperand();
 };
