@@ -3,9 +3,9 @@ OpSubract.h and OpSubtract.cpp written by Quinton
 */
 #ifndef __OPSUBTRACT__
 #define __OPSUBTRACT__
-#include "OpCode.h"
+#include "MathOpCode.h"
 
-class OpSubtract : public OpCode
+class OpSubtract : public MathOpCode
 {
 public:
 	OpSubtract();//memory goes in the squiggly and in the constructor
