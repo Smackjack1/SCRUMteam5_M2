@@ -34,27 +34,25 @@ void Executor::CallInvoker()
 
 	string opcode = "";
 	int operand = 0;
+	//todo??? make executor in charge of opRead and opWrite
+	//while (GetOpcode() != "43")//43 = Halt 
+	//{
+	opcode = GetOpcode();
+	operand = GetOperand();
 
-	while (GetOpcode() != "43")//43 = Halt 
+	if (InvokerInstance.executeCommand(opcode, operand) == -1)
 	{
-		 opcode = GetOpcode();
-		 operand = GetOperand();
-
-		if (InvokerInstance.executeCommand(opcode, operand) == -1)
-		{
-			//error
-			throw std::runtime_error("invalid instruction for execution\n"); //fixed by Quinton, changed to throw instead of just break
-		}
-
-		if (opcode != "40" && opcode != "41" && opcode != "42") // fixed by Quinton, should have been opcode not GetOpCode()
-		{
-			int currentPC = 0;
-			MemInstance->read(PC, &currentPC);
-			currentPC += 1; // fixed by Quinton, was calling &mainmem which cannot be done, now it has a local variable that stores pc value, then increments by 1 and writes new value to PC
-			MemInstance->write(PC, &currentPC);
-		}
-
+		//error
+		throw std::runtime_error("invalid instruction for execution\n"); //fixed by Quinton, changed to throw instead of just break
 	}
-	//dump memory (print)
-	//MemInstance->dump(); changed: executor is no longer in charge of printing memory
+
+	if (opcode != "40" && opcode != "41" && opcode != "42") // fixed by Quinton, should have been opcode not GetOpCode()
+	{
+		int currentPC = 0;
+		MemInstance->read(PC, &currentPC);
+		currentPC += 1; // fixed by Quinton, was calling &mainmem which cannot be done, now it has a local variable that stores pc value, then increments by 1 and writes new value to PC
+		MemInstance->write(PC, &currentPC);
+	}
+
+	//}
 }
