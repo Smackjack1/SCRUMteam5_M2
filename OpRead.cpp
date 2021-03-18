@@ -7,14 +7,14 @@ OpRead::OpRead()
 	this->code = "10";
 }
 
-void OpRead::execute(int arguement)
+std::string OpRead::execute(int arguement,std::string word)
 {
 	unsigned int wordLength = 4;
 	int inputWord = 0;
 	char firstChar;
 	string word = "";
-	cout << "Enter data as an integer (4 digits max):\n";//user prompt added by Kevin
-	getline(cin,word);
+	//cout << "Enter data as an integer (4 digits max):\n";//user prompt added by Kevin
+	//getline(cin,word);
 	firstChar = word.at(0);
 	if (firstChar == '-' or firstChar == '+')
 	{
@@ -33,4 +33,5 @@ void OpRead::execute(int arguement)
 		throw std::runtime_error("Incorrect argument for read command, must be an integer");
 	}
 	this->memory->write(arguement, &inputWord);
+	return ""; // does not need an output, so return ""
 }
