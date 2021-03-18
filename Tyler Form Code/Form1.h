@@ -39,6 +39,9 @@ namespace CppCLRWinformsProjekt {
 
 
 	private: System::Windows::Forms::PageSetupDialog^ pageSetupDialog1;
+	private: System::Windows::Forms::Button^ button1;
+	private: System::Windows::Forms::Button^ button2;
+	private: System::Windows::Forms::Button^ button3;
 
 	protected:
 
@@ -57,25 +60,59 @@ namespace CppCLRWinformsProjekt {
 		{
 			this->textField = (gcnew System::Windows::Forms::TextBox());
 			this->pageSetupDialog1 = (gcnew System::Windows::Forms::PageSetupDialog());
+			this->button1 = (gcnew System::Windows::Forms::Button());
+			this->button2 = (gcnew System::Windows::Forms::Button());
+			this->button3 = (gcnew System::Windows::Forms::Button());
 			this->SuspendLayout();
 			// 
 			// textField
 			// 
-			this->textField->Location = System::Drawing::Point(30, 12);
+			this->textField->Location = System::Drawing::Point(12, 12);
 			this->textField->Multiline = true;
 			this->textField->Name = L"textField";
-			this->textField->Size = System::Drawing::Size(218, 219);
+			this->textField->Size = System::Drawing::Size(138, 219);
 			this->textField->TabIndex = 1;
 			this->textField->TextChanged += gcnew System::EventHandler(this, &Form1::textField_TextChanged);
 			this->textField->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &Form1::textField_KeyDown);
 			this->textField->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &Form1::textField_KeyPress);
 			this->textField->KeyUp += gcnew System::Windows::Forms::KeyEventHandler(this, &Form1::textField_KeyUp);
 			// 
+			// button1
+			// 
+			this->button1->Location = System::Drawing::Point(12, 247);
+			this->button1->Name = L"button1";
+			this->button1->Size = System::Drawing::Size(106, 37);
+			this->button1->TabIndex = 2;
+			this->button1->Text = L"Help";
+			this->button1->UseVisualStyleBackColor = true;
+			this->button1->Click += gcnew System::EventHandler(this, &Form1::button1_Click);
+			// 
+			// button2
+			// 
+			this->button2->Location = System::Drawing::Point(192, 247);
+			this->button2->Name = L"button2";
+			this->button2->Size = System::Drawing::Size(105, 37);
+			this->button2->TabIndex = 3;
+			this->button2->Text = L"Run/Halt";
+			this->button2->UseVisualStyleBackColor = true;
+			// 
+			// button3
+			// 
+			this->button3->Location = System::Drawing::Point(380, 247);
+			this->button3->Name = L"button3";
+			this->button3->Size = System::Drawing::Size(104, 37);
+			this->button3->TabIndex = 4;
+			this->button3->Text = L"Log";
+			this->button3->UseVisualStyleBackColor = true;
+			// 
 			// Form1
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(284, 259);
+			this->ClientSize = System::Drawing::Size(560, 305);
+			this->Controls->Add(this->button3);
+			this->Controls->Add(this->button2);
+			this->Controls->Add(this->button1);
 			this->Controls->Add(this->textField);
 			this->Name = L"Form1";
 			this->Text = L"Form1";
@@ -154,6 +191,8 @@ private: System::Void textField_KeyPress(System::Object^ sender, System::Windows
 		// Stop the character from being entered into the control since it is non-numerical.
 		e->Handled = true;
 	}
+}
+private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
 }
 };
 }
