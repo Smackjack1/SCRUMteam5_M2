@@ -7,7 +7,7 @@ OpWrite::OpWrite()
 	this->code = "11";
 }
 
-std::string OpWrite::execute(int argument, std::string input = "")
+std::string OpWrite::execute(int argument, std::string input)//input should just be ""
 {
 	int word;
 	this->memory->read(argument, &word);
