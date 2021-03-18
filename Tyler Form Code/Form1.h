@@ -79,7 +79,7 @@ namespace CppCLRWinformsProjekt {
 			// 
 			// button1
 			// 
-			this->button1->Location = System::Drawing::Point(12, 247);
+			this->button1->Location = System::Drawing::Point(22, 247);
 			this->button1->Name = L"button1";
 			this->button1->Size = System::Drawing::Size(106, 37);
 			this->button1->TabIndex = 2;
@@ -95,6 +95,7 @@ namespace CppCLRWinformsProjekt {
 			this->button2->TabIndex = 3;
 			this->button2->Text = L"Run/Halt";
 			this->button2->UseVisualStyleBackColor = true;
+			this->button2->Click += gcnew System::EventHandler(this, &Form1::button2_Click);
 			// 
 			// button3
 			// 
@@ -104,6 +105,7 @@ namespace CppCLRWinformsProjekt {
 			this->button3->TabIndex = 4;
 			this->button3->Text = L"Log";
 			this->button3->UseVisualStyleBackColor = true;
+			this->button3->Click += gcnew System::EventHandler(this, &Form1::button3_Click);
 			// 
 			// Form1
 			// 
@@ -146,22 +148,13 @@ namespace CppCLRWinformsProjekt {
 				// Determine whether the keystroke is a backspace.
 				if (e->KeyCode != Keys::Back)
 				{
-					if (e->KeyCode != Keys::Enter)
-					{
-						if (Control::ModifierKeys == Keys::Shift) {
-							if (e->KeyCode != Keys::Add)
-							{
-								// A non-numerical keystroke was pressed.
-								// Set the flag to true and evaluate in KeyPress event.
-								nonNumberEntered = true;
-							}
-						}
-					}
 					if (e->KeyCode == Keys::Enter)
 					{	
+						nonNumberEntered = false;
 						array<String^>^ myLines = textField->Lines;
 						String^ firstline = myLines[lineNum];
 						MessageBox::Show(firstline);
+
 						/*
 						int charIndex = textField->GetFirstCharIndexFromLine(lineNum);
 						String^ opCode = textField->Text;
@@ -193,6 +186,10 @@ private: System::Void textField_KeyPress(System::Object^ sender, System::Windows
 	}
 }
 private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void button3_Click(System::Object^ sender, System::EventArgs^ e) {
 }
 };
 }
