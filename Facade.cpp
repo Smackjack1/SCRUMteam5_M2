@@ -32,3 +32,13 @@ int Facade::getCurrentOperand()
 {
     return myExecutor.GetOperand();
 }
+
+void Facade::opRead(std::string input)
+{
+    reader.execute(getCurrentOperand(), input);
+}
+
+std::string Facade::opWrite()
+{
+    return writer.execute(getCurrentOperand(), "");
+}
