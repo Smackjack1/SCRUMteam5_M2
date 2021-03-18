@@ -13,5 +13,8 @@ public:
 	std::string getMemory();
 	void execute();
 	bool addCommand(std::string command);
+	void incrementPC(int increment = 1);
+	std::string getCurrentOpCode();
+	int getCurrentOperand();
 };
 #endif
