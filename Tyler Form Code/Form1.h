@@ -125,6 +125,7 @@ namespace CppCLRWinformsProjekt {
 		}
 #pragma endregion
 	bool nonNumberEntered = false;
+	bool bRun = false;
 	int lineNum = 0;
 	private: System::Void Form1_Load(System::Object^ sender, System::EventArgs^ e) {
 	}
@@ -178,18 +179,46 @@ namespace CppCLRWinformsProjekt {
 
 
 	}
-private: System::Void textField_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {
-	if (nonNumberEntered == true)
+	private: System::Void textField_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) 
 	{
-		// Stop the character from being entered into the control since it is non-numerical.
-		e->Handled = true;
+		if (nonNumberEntered == true)
+		{
+			// Stop the character from being entered into the control since it is non-numerical.
+			e->Handled = true;
+		}
 	}
-}
-private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
-}
-private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
-}
-private: System::Void button3_Click(System::Object^ sender, System::EventArgs^ e) {
-}
+	
+	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) 
+	{
+		//Written by: Devan Hone
+		
+		String^ directory = Environment::CurrentDirectory;
+		directory += "\\ReadMe.txt";
+		System::Diagnostics::Process::Start(directory);
+		
+		//MessageBox::Show(directory, "Test Message");
+	}
+	private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) 
+	{
+		//Written by: Devan Hone 
+		
+		//Set Global flag:
+		bRun = !bRun;
+		
+		//Change Color
+		if (bRun)
+		{
+			this->button2->BackColor = System::Drawing::Color::Green;
+		}
+		else this->button2->BackColor = System::Drawing::Color::Red;
+	}
+	private: System::Void button3_Click(System::Object^ sender, System::EventArgs^ e) 
+	{
+		//Written by: Devan Hone
+		
+		String^ directory = Environment::CurrentDirectory;
+		directory += "\\ErrLog.txt";
+		System::Diagnostics::Process::Start(directory);
+	}
 };
 }
