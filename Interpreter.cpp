@@ -3,11 +3,11 @@ SCRUM Team 5
 Project M1
 written by: Ethan Olsen
 */
+#include "pch.h"
 #include "Interpreter.h"
 #include <iostream>
-#include <string>
 #include <iomanip>
-
+#include <string>
 using namespace std;
 
 interpreter::interpreter() {
@@ -20,14 +20,17 @@ interpreter::~interpreter()
 
 bool interpreter::parseCommand(std::string command)
 {
-	numbers = 0;
+	int numbers = 0;
 	stopCase = -99999; //added by kevin / Quinton
 	wordLength = 5;
 	allDigits = true;
 	vmMemory* memory = vmMemory::getInstance();
 	maxMemory = 100;
-
-	firstChar = command.at(0);
+	if (command == "") // added by Q, need to look for empty input
+	{
+		throw std::runtime_error("no empty lines are allowed");
+	}
+	char firstChar = command.at(0);
 	//test if first char is either = or -
 	if (incrementor > maxMemory)
 	{
