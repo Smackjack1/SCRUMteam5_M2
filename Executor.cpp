@@ -1,5 +1,6 @@
+#include "pch.h"
 #include "Executor.h"
-
+using namespace std;
 Executor::Executor()
 {
 	counter = 0;
@@ -23,8 +24,9 @@ int Executor::GetOperand()
 	int data = 0;
 	MemInstance->read(PC, &temp_mem_address);//get address in PC register
 	MemInstance->read(temp_mem_address, &data);
-	
-	return data % 100;
+	string str = to_string(data);
+	str = str.substr(2, str.size());
+	return stoi(str);
 }
 
 void Executor::CallInvoker()
