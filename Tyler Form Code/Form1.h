@@ -15,7 +15,7 @@ Functions :
 	Memory_content : Displays the content in main memory.
 */
 bool executing = false;
-using Itype = String ^;
+using Itype = String^;
 bool timeForUserInput = false;
 using System::Runtime::InteropServices::Marshal;
 Facade programAccess = Facade();
@@ -34,14 +34,14 @@ std::string convertFromSystemString(String^ string)
 	return returnString;
 }
 namespace CppCLRWinformsProjekt {
-	
+
 	using namespace System;
 	using namespace System::ComponentModel;
 	using namespace System::Collections;
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
-	
+
 
 	/// <summary>
 	/// Zusammenfassung für Form1
@@ -69,6 +69,7 @@ namespace CppCLRWinformsProjekt {
 			}
 		}
 	private: System::Windows::Forms::TextBox^ textField;
+	private: System::Windows::Forms::FolderBrowserDialog folderBrowserDialog1;
 	protected:
 
 
@@ -82,6 +83,11 @@ namespace CppCLRWinformsProjekt {
 	private: System::Windows::Forms::Label^ memory_content;
 	private: System::Windows::Forms::Label^ program;
 	private: System::Windows::Forms::TextBox^ textBox1;
+	private: System::Windows::Forms::FolderBrowserDialog^ FolderBrowser1;
+	private: bool fileOpened = false;
+	private: String^ openFileName; 
+	private: String^ saveFileName;
+	private: String^ folderName;
 
 
 	protected:
@@ -140,7 +146,7 @@ namespace CppCLRWinformsProjekt {
 			this->loadButton->TabIndex = 2;
 			this->loadButton->Text = L"Load";
 			this->loadButton->UseVisualStyleBackColor = true;
-			this->button1->Click += gcnew System::EventHandler(this, &Form1::load_Click);
+			this->loadButton->Click += gcnew System::EventHandler(this, &Form1::load_Click);
 			//
 			//Save Button
 			//
@@ -150,7 +156,7 @@ namespace CppCLRWinformsProjekt {
 			this->saveButton->TabIndex = 2;
 			this->saveButton->Text = L"Save";
 			this->saveButton->UseVisualStyleBackColor = true;
-			this->button1->Click += gcnew System::EventHandler(this, &Form1::save_Click);
+			this->saveButton->Click += gcnew System::EventHandler(this, &Form1::save_Click);
 			// 
 			// Help Button
 			// 
@@ -263,7 +269,7 @@ namespace CppCLRWinformsProjekt {
 							{
 								firstline = myLines[myLines->Length - 1];
 							}
-							
+
 							//myLines[lineNum] = "Enter Command: ";
 							if (timeForUserInput == true) // we go here only when execution has begun
 							{
@@ -281,13 +287,13 @@ namespace CppCLRWinformsProjekt {
 							//programAccess.addCommand("whatup");
 							//lineNum++;
 						}
-						catch(runtime_error& e)
+						catch (runtime_error& e)
 						{
 							MessageBox::Show(convertToSystemString(e.what()));
 							//need everything to stop
 							exit(1);
 						}
-						
+
 
 
 
@@ -301,11 +307,10 @@ namespace CppCLRWinformsProjekt {
 							if (currLine = "\o") {
 								break;
 							}
-
 						}
 						*/
 
-						
+
 					}
 				}
 			}
@@ -331,44 +336,44 @@ namespace CppCLRWinformsProjekt {
 
 		//MessageBox::Show(directory, "Test Message");
 	}
-		   void executeEverything()
-		   {
-			   while (programAccess.getCurrentOpCode() != "43")
-			   {
-				   if (programAccess.getCurrentOpCode() == "10")
-				   {
+	void executeEverything()
+	{
+		while (programAccess.getCurrentOpCode() != "43")
+		{
+			if (programAccess.getCurrentOpCode() == "10")
+			{
 
-						this->textField->AppendText(Environment::NewLine);
-						this->textField->AppendText("Enter data as an integer (4 digits max, press enter to input number):");
-						this->textField->AppendText(Environment::NewLine);
-						timeForUserInput = true;
+				this->textField->AppendText(Environment::NewLine);
+				this->textField->AppendText("Enter data as an integer (6 digits max, press enter to input number):");
+				this->textField->AppendText(Environment::NewLine);
+				timeForUserInput = true;
 
-						//lineNum++;
-						goto endLoop;
-				   }
-				   else if (programAccess.getCurrentOpCode() == "11")
-				   {
-					   std::string output = programAccess.opWrite();
-					   this->textField->AppendText(Environment::NewLine);
-					   this->textField->AppendText(convertToSystemString(output));
-					   //lineNum += 2;
-					   programAccess.incrementPC(1);
-					   continue;
-				   }
-				   else
-				   {
-					   programAccess.execute();
-				   }
+				//lineNum++;
+				goto endLoop;
+			}
+			else if (programAccess.getCurrentOpCode() == "11")
+			{
+				std::string output = programAccess.opWrite();
+				this->textField->AppendText(Environment::NewLine);
+				this->textField->AppendText(convertToSystemString(output));
+				//lineNum += 2;
+				programAccess.incrementPC(1);
+				continue;
+			}
+			else
+			{
+				programAccess.execute();
+			}
 
-			   }
-			   if (programAccess.getCurrentOpCode() == "43")
-			   {
-				   this->textBox1->Text = convertToSystemString(programAccess.getMemory());
-				   this->textField->Enabled = false;
-			   }
-		   endLoop:;
-			   //No longer able to add commands
-		   }
+		}
+		if (programAccess.getCurrentOpCode() == "43")
+		{
+			this->textBox1->Text = convertToSystemString(programAccess.getMemory());
+			this->textField->Enabled = false;
+		}
+	endLoop:;
+		//No longer able to add commands
+	}
 	private: System::Void execute_Click(System::Object^ sender, System::EventArgs^ e)
 	{
 		try
@@ -378,13 +383,16 @@ namespace CppCLRWinformsProjekt {
 		//programAccess.addCommand(convertFromSystemString(firstline);
 		//take every line from the input window and input them into the interpreter
 			cli::array<Itype>^ myLines = textField->Lines;
-			for (int i = 0; i < myLines->Length;i++)
+			for (int i = 0; i < myLines->Length; i++)
 			{
+				if (myLines[i] == "") {
+					continue;
+				}
 				programAccess.addCommand(convertFromSystemString(myLines[i]));
 			}
 			this->textField->AppendText(Environment::NewLine);
 			this->textField->AppendText("Halting");
-			
+
 			//now execute every line
 			executeEverything();
 		}
@@ -397,17 +405,88 @@ namespace CppCLRWinformsProjekt {
 	}
 	private: System::Void load_Click(System::Object^ sender, System::EventArgs^ e)
 	{
+		OpenFileDialog^ openFileDialog1 = gcnew OpenFileDialog();
+		openFileDialog1->DefaultExt = "txt";
+		openFileDialog1->Filter = "txt files (*.txt)|*.txt";
 
+		this->folderBrowserDialog1.ShowNewFolderButton = false;
+		this->folderBrowserDialog1.RootFolder = Environment::SpecialFolder::Personal;
+
+		// If a file is not opened, then set the initial directory to the
+		// FolderBrowserDialog.SelectedPath value.
+		if (!fileOpened) {
+			openFileDialog1->InitialDirectory = folderBrowserDialog1.SelectedPath;
+			//openFileDialog1->FileName = NULL;
+		}
+
+		// Display the openFile dialog.
+		System::Windows::Forms::DialogResult result = openFileDialog1->ShowDialog();
+
+		// OK button was pressed.
+		if (result == System::Windows::Forms::DialogResult::OK)
+		{
+			openFileName = openFileDialog1->FileName;
+			try
+			{
+				// Output the requested file in richTextBox1.
+				this->textField->Clear();
+				// Create a text string, which is used to output the text file
+				string myText;
+
+				// Read from the text file
+				ifstream MyReadFile(convertFromSystemString(openFileName));
+
+				// Use a while loop together with the getline() function to read the file line by line
+				while (getline(MyReadFile, myText)) {
+					// Output the text from the file
+					this->textField->AppendText(convertToSystemString(myText));
+					this->textField->AppendText(Environment::NewLine);
+				}
+
+				fileOpened = true;
+				// Close the file
+				MyReadFile.close();
+			}
+			catch (runtime_error& exp)
+			{
+				MessageBox::Show("An error occurred while attempting to load the file.");
+				fileOpened = false;
+			}
+			Invalidate();
+		}
+
+		// Cancel button was pressed.
+		else //if (result == DialogResult.Cancel)
+		{
+			return;
+		}
 	}
 	private: System::Void save_Click(System::Object^ sender, System::EventArgs^ e)
 	{
+		SaveFileDialog^ saveFileDialog1 = gcnew SaveFileDialog();
 
+
+		//CODE REQUIRED TO SAVE s2 AS .TXT FILE
+
+		saveFileDialog1->ShowDialog();
+
+		saveFileName = saveFileDialog1->FileName;
+
+		MessageBox::Show(saveFileName);
+		// Create and open a text file
+		ofstream MyFile(convertFromSystemString(saveFileName));
+
+		// Write to the file
+		MyFile << convertFromSystemString(this->textField->Text);
+
+		// Close the file
+		MyFile.close();
 	}
-	
-private: System::Void memory_content_Click(System::Object^ sender, System::EventArgs^ e) {
-}
-private: System::Void listBox1_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) {
-}
-};
+
+	private: System::Void memory_content_Click(System::Object^ sender, System::EventArgs^ e) {
+	}
+	private: System::Void listBox1_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
+	}
+	};
 }
 #endif
