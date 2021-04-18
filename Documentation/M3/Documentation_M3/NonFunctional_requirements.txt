@@ -1,0 +1,3 @@
+1. The user should be able to access all parts of the program within 2 clicks
+2. Program window should be more aesthetically attractive (add some color, shapes, etc.)
+3. UVSim should run on any windows 10 system as an independent 32-bit software. (Program should be portable).
