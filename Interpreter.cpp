@@ -19,7 +19,7 @@ bool interpreter::parseCommand(std::string command)
 		wordLength = 5;
 		allDigits = true;
 		vmMemory* memory = vmMemory::getInstance();
-		maxMemory = 100;
+		maxMemory = 99;   //changed to 99 to not write over PC
 		if (command == "") // added by Q, need to look for empty input
 		{
 			throw std::runtime_error("no empty lines are allowed");
@@ -72,9 +72,9 @@ bool interpreter::parseCommand(std::string command)
 			throw std::runtime_error("invalid input:"); // changed by Quinton, changed to throw error instead of break
 		}
 
-		if (firstChar == '-') {
+		/*if (firstChar == '-') {	//changed needed!
 			numbers = numbers * -1;
-		}
+		}*/
 
 		memory->write(incrementor, &numbers);
 		incrementor++;
@@ -89,7 +89,7 @@ bool interpreter::parseCommand(std::string command)
 			wordLength = 5;
 			allDigits = true;
 			vmMemory* memory = vmMemory::getInstance();
-			maxMemory = 100;
+			maxMemory = 99;   //changed to 99 to not write over PC
 			if (command == "") // added by Q, need to look for empty input
 			{
 				throw std::runtime_error("no empty lines are allowed");
@@ -156,7 +156,7 @@ bool interpreter::parseCommand(std::string command)
 			wordLength = 4; // 4 because we no longer have -/+
 			allDigits = true;
 			vmMemory* memory = vmMemory::getInstance();
-			maxMemory = 100;
+			maxMemory = 99;   //changed to 99 to not write over PC
 			if (command == "") // added by Q, need to look for empty input
 			{
 				throw std::runtime_error("no empty lines are allowed");
